@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Front Camera</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    video {
+      margin-top: 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Open Front Camera</h1>
+  <p>Click the button below to access your front camera.</p>
+  <button id="startCamera">Allow Camera Access</button>
+  <video id="video" autoplay playsinline></video>
+
+  <script>
+    const startCameraButton = document.getElementById('startCamera');
+    const video = document.getElementById('video');
+
+    startCameraButton.addEventListener('click', async () => {
+      try {
+        // Request camera access with front-facing camera
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "user" },
+          audio: false
+        });
+        video.srcObject = stream; // Display the video stream in the <video> element
+      } catch (error) {
+        console.error("Error accessing the camera:", error);
+        alert("Permission denied or camera not accessible.");
+      }
+    });
+  </script>
+</body>
+</html>
